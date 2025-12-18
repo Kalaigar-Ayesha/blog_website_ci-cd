@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.env
+.git
+.gitignore
+.vscode
+coverage
+logs
+*.log
+# Keep the build folder (it must be included in the image)
+# build

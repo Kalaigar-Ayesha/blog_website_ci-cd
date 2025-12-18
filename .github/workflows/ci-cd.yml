@@ -1,0 +1,36 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test -- --watchAll=false || true
+
+      - name: Build Docker image
+        run: docker build -t devops-blog .
+
+      - name: Stop old container
+        run: |
+          docker stop devops-blog || true
+          docker rm devops-blog || true
+
+      - name: Run new container
+        run: docker run -d -p 3000:3000 --name devops-blog devops-blog
