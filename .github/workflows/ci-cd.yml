@@ -37,3 +37,4 @@ jobs:
 
       - name: Run new container
         run: docker run -d -p 3000:3000 --name devops-blog devops-blog
+
